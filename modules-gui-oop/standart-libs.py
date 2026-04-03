@@ -30,8 +30,11 @@ try:
             print(f'random number is: {rand_value}; the square of this number is: {math_sqrt}')
         else:
             print(rand_value)
+<<<<<<< HEAD
     else:
         print(rand_value)
+=======
+>>>>>>> 32ece40e5ae5720798765788fef39d9deb949aa9
 
 except ValueError:
     print('only numbers!')
