@@ -12,9 +12,10 @@ dt = 0
 
 class Player:
     # defalt values
-    def __init__(self, x, y):
+    def __init__(self, x, y, color='green'):
         self.pos = pygame.Vector2(x, y)
         self.start_pos = pygame.Vector2(x, y)
+        self.color = color
 
     # print the player position
     def get_position(self):
@@ -43,7 +44,7 @@ class Player:
     # setting the player
     def draw_player(self, surface):
         rect = pygame.Rect(self.pos.x, self.pos.y, 40, 40)
-        pygame.draw.rect(surface, 'green', (self.pos.x, self.pos.y, 40, 40))
+        pygame.draw.rect(surface, self.color, (self.pos.x, self.pos.y, 40, 40))
         return rect
 
 class Obstacle:
@@ -68,6 +69,7 @@ class Obstacle:
 
 player = Player(screen.get_width() / 2, screen.get_height() / 2)
 obstacles = [Obstacle(random.randint(0, 460), -40) for _ in range(3)]
+colors = ['green', 'blue', 'orange', 'red', 'purple', 'yellow']
 
 running = True
 
@@ -77,15 +79,25 @@ while running:
             running = False
 
     screen.fill((0, 0, 0))
+    
     player_rect = player.draw_player(screen)
     player.move_player(dt)
+
+    obstacle_rects = []
     for obstacle in obstacles:
         obstacle.fall(dt)
-        obstacle_rect = obstacle.draw_obstacle(screen)
+        rect = obstacle.draw_obstacle(screen)
+        obstacle_rects.append(rect)
 
-        if player_rect.colliderect(obstacle_rect):
-            print("Game over!") 
-            running = False
+    if any(player_rect.colliderect(rect) for rect in obstacle_rects):
+        print('Collision!')
+        player.pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
+        player.color = random.choice(colors)
+        for ob in obstacles:
+            ob.pos.y = random.randint(-90, -40)
+            ob.pos.x = random.randint(0, screen.get_width() - 40)
+
+    print(obstacles)
 
     pygame.display.flip()
 
