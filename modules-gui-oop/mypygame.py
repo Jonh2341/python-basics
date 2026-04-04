@@ -97,7 +97,7 @@ while running:
             ob.pos.y = random.randint(-90, -40)
             ob.pos.x = random.randint(0, screen.get_width() - 40)
 
-    print(obstacles)
+    # print(obstacles)
 
     pygame.display.flip()
 

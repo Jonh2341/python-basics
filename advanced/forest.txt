@@ -1,0 +1,7 @@
+tree - not an animal
+grass - not an animal
+squirrel - animal
+stone - not an animal
+pathes - not an animal
+bee - animal
+bear - animal
